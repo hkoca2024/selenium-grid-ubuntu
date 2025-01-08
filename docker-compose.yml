@@ -16,7 +16,7 @@ services:
 
   chrome_1:
     image: selenium/node-chrome:latest
-    shm_size: 4gb
+    shm_size: 512mb
     container_name: selenium-chrome-1
     depends_on:
       - hub
@@ -32,7 +32,7 @@ services:
     restart: unless-stopped
   chrome_2:
     image: selenium/node-chrome:latest
-    shm_size: 4gb
+    shm_size: 512mb
     container_name: selenium-chrome-2
     depends_on:
       - hub
@@ -47,9 +47,41 @@ services:
       - selenium-grid
     restart: unless-stopped
 
+  chrome_3:
+    image: selenium/node-chrome:latest
+    shm_size: 512mb
+    container_name: selenium-chrome-3
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - VNC_NO_PASSWORD=1
+    networks:
+      - selenium-grid
+    restart: unless-stopped
+  chrome_4:
+    image: selenium/node-chrome:latest
+    shm_size: 512mb
+    container_name: selenium-chrome-4
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - VNC_NO_PASSWORD=1
+    networks:
+      - selenium-grid
+    restart: unless-stopped
   firefox_1:
     image: selenium/node-firefox:latest
-    shm_size: 2gb
+    shm_size: 512mb
     container_name: selenium-firefox-1
     depends_on:
       - hub
@@ -63,7 +95,7 @@ services:
     restart: unless-stopped
   firefox_2:
     image: selenium/node-firefox:latest
-    shm_size: 2gb
+    shm_size: 512mb
     container_name: selenium-firefox-2
     depends_on:
       - hub
@@ -84,6 +116,8 @@ services:
     depends_on:
       - chrome_1
       - chrome_2
+      - chrome_3
+      - chrome_4
     environment:
       - DISPLAY_CONTAINER_NAME=selenium-chrome-1
       - FILE_NAME=chrome_video.mp4
