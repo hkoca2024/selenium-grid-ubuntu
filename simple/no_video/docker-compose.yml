@@ -15,7 +15,7 @@ services:
       - GRID_BROWSER_TIMEOUT=300000
     restart: unless-stopped
 
-  chrome_1:
+  chrome:
     image: selenium/node-chrome:latest
     shm_size: 256mb
     depends_on:
@@ -38,7 +38,7 @@ services:
     volumes:
       - /tmp/videos:/videos
     depends_on:
-      - chrome_1
+      - chrome
     environment:
       - DISPLAY_CONTAINER_NAME=selenium-chrome-1
       - FILE_NAME=chrome_video.mp4
