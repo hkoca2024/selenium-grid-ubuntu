@@ -139,8 +139,7 @@ services:
     networks:
       - selenium-grid
     restart: unless-stopped
-volumes:
-  jenkins_home:
+
 networks:
   selenium-grid:
     driver: bridge
