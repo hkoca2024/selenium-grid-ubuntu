@@ -40,7 +40,7 @@ services:
     depends_on:
       - chrome
     environment:
-      - DISPLAY_CONTAINER_NAME=selenium-chrome-1
+      - DISPLAY_CONTAINER_NAME=no_video-chrome-1
       - FILE_NAME=chrome_video.mp4
     networks:
       - selenium-grid
